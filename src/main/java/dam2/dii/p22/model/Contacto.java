@@ -9,10 +9,12 @@ public class Contacto {
   private String phone;
   private String coments;
 
-  public Contacto() {}
+  public Contacto() {
+    this("", "", "", "", "");
+  }
 
   public Contacto(String name, String surnames, String email, String phone, String coments) {
-    this(null, name, surnames, email, phone, coments);
+    this("", name, surnames, email, phone, coments);
   }
 
   public Contacto(String id, String name, String surnames, String email, String phone,
