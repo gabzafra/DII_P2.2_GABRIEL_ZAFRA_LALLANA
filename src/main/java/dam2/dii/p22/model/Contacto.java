@@ -73,4 +73,10 @@ public class Contacto {
     this.coments = coments;
   }
 
+  @Override
+  public String toString() {
+    return "Contacto [id=" + id + ", name=" + name + ", surnames=" + surnames + ", email=" + email
+        + ", phone=" + phone + ", coments=" + coments + "]";
+  }
+
 }

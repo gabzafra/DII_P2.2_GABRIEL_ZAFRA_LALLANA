@@ -43,7 +43,7 @@ public class ContactoService {
   public Contacto updateContacto(Contacto contact) {
     Contacto newContact = null;
     if (!hasEmptyFields(contact)) {
-      newContact = DAO.createContact(contact);
+      newContact = DAO.updateContact(contact);
     }
     if (newContact != null) {
       return newContact;
