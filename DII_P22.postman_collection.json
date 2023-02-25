@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "98cd4bad-1d71-4d5c-8aae-6e556680a9aa",
+		"name": "DII_P22",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9531220"
+	},
+	"item": [
+		{
+			"name": "Listar los contactos (JSON)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/DII_P2.2_GABRIEL_ZAFRA_LALLANA/webapi/contact",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"DII_P2.2_GABRIEL_ZAFRA_LALLANA",
+						"webapi",
+						"contact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener el número de contactos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/DII_P2.2_GABRIEL_ZAFRA_LALLANA/webapi/contact/size",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"DII_P2.2_GABRIEL_ZAFRA_LALLANA",
+						"webapi",
+						"contact",
+						"size"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un contacto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "adam@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "MODIFICADO",
+							"type": "text"
+						},
+						{
+							"key": "surnames",
+							"value": "renuevo novo",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "12345600",
+							"type": "text"
+						},
+						{
+							"key": "coments",
+							"value": "comentarios del nuevo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/DII_P2.2_GABRIEL_ZAFRA_LALLANA/webapi/contact",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"DII_P2.2_GABRIEL_ZAFRA_LALLANA",
+						"webapi",
+						"contact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insertar un contacto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "nuevo@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "nuevo",
+							"type": "text"
+						},
+						{
+							"key": "surnames",
+							"value": "renuevo novo",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "12345600",
+							"type": "text"
+						},
+						{
+							"key": "coments",
+							"value": "comentarios del nuevo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/DII_P2.2_GABRIEL_ZAFRA_LALLANA/webapi/contact",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"DII_P2.2_GABRIEL_ZAFRA_LALLANA",
+						"webapi",
+						"contact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un contacto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/DII_P2.2_GABRIEL_ZAFRA_LALLANA/webapi/contact/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"DII_P2.2_GABRIEL_ZAFRA_LALLANA",
+						"webapi",
+						"contact",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
