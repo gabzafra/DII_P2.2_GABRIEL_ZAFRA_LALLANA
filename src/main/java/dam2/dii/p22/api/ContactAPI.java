@@ -1,8 +1,9 @@
 package dam2.dii.p22.api;
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,101 +13,96 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import dam2.dii.p22.model.Contacto;
 import dam2.dii.p22.service.ContactoService;
 import dam2.dii.p22.service.ServiceException;
 
-/**
- * Root resource (exposed at "myresource" path)
- */
 @Path("contact")
 public class ContactAPI {
   private ContactoService contactSrv = new ContactoService();
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public ArrayList<Contacto> getContactsList() {
-    return (ArrayList<Contacto>) contactSrv.getAllContacts();
+  public Response getContactsList() {
+    try {
+      List<Contacto> contactList = contactSrv.getAllContacts();
+      return Response.ok(contactList).build();
+    } catch (ServiceException e) {
+      return Response.status(e.getStatus()).entity(e.getMessage()).build();
+    }
   }
-
 
   @GET
-
   @Path("size")
-
   @Produces(MediaType.TEXT_PLAIN)
   public Response getContactsTotal() {
-    Response response;
     try {
       String total = contactSrv.getContactsTotal();
-      response = Response.ok(total).build();
+      return Response.ok(total).build();
     } catch (ServiceException e) {
-      response = Response.status(e.getStatus()).entity(e.getMessage()).build();
+      return Response.status(e.getStatus()).entity(e.getMessage()).build();
     }
-    return response;
   }
-
-
-  // @GET
-  // @Path("size")
-  // @Produces(MediaType.TEXT_PLAIN)
-  // public String getContactsTotal() {
-  // return contactSrv.getContactsTotal();
-  // }
 
   @POST
   @Consumes("application/x-www-form-urlencoded")
   @Produces(MediaType.TEXT_PLAIN)
-  public String createNewContact(@FormParam("name") String name,
-      @FormParam("surnames") String surnames, @FormParam("email") String email,
-      @FormParam("phone") String phone, @FormParam("coments") String coments) {
+  public Response createNewContact(@DefaultValue("") @FormParam("name") String name,
+      @DefaultValue("") @FormParam("surnames") String surnames,
+      @DefaultValue("") @FormParam("email") String email,
+      @DefaultValue("") @FormParam("phone") String phone,
+      @DefaultValue("") @FormParam("coments") String coments) {
+    Contacto newContactData = new Contacto();
+    newContactData.setName(name);
+    newContactData.setSurnames(surnames);
+    newContactData.setEmail(email);
+    newContactData.setPhone(phone);
+    newContactData.setComents(coments);
 
-    Contacto c = new Contacto();
-    c.setName(name);
-    c.setSurnames(surnames);
-    c.setEmail(email);
-    c.setPhone(phone);
-    c.setComents(coments);
-
-    Contacto result = contactSrv.createContacto(c);
-    if (result.getId().equals("")) {
-      return "Se ha producido un error al intentar crear el contacto";
-    } else {
-      return result.toString();
+    try {
+      Contacto result = contactSrv.createContacto(newContactData);
+      return Response.ok(result.toString()).build();
+    } catch (ServiceException e) {
+      return Response.status(e.getStatus()).entity(e.getMessage()).build();
     }
   }
 
   @PUT
   @Consumes("application/x-www-form-urlencoded")
   @Produces(MediaType.TEXT_PLAIN)
-  public String updateContact(@FormParam("id") String id, @FormParam("name") String name,
-      @FormParam("surnames") String surnames, @FormParam("email") String email,
-      @FormParam("phone") String phone, @FormParam("coments") String coments) {
+  public Response updateContact(@DefaultValue("") @FormParam("id") String id,
+      @DefaultValue("") @FormParam("name") String name,
+      @DefaultValue("") @FormParam("surnames") String surnames,
+      @DefaultValue("") @FormParam("email") String email,
+      @DefaultValue("") @FormParam("phone") String phone,
+      @DefaultValue("") @FormParam("coments") String coments) {
 
-    Contacto c = new Contacto();
-    c.setId(id);
-    c.setName(name);
-    c.setSurnames(surnames);
-    c.setEmail(email);
-    c.setPhone(phone);
-    c.setComents(coments);
+    Contacto updContactData = new Contacto();
+    updContactData.setId(id);
+    updContactData.setName(name);
+    updContactData.setSurnames(surnames);
+    updContactData.setEmail(email);
+    updContactData.setPhone(phone);
+    updContactData.setComents(coments);
 
-    Contacto result = contactSrv.updateContacto(c);
-    if (result.getId().equals("")) {
-      return "Se ha producido un error al intentar actualizar el contacto";
-    } else {
-      return result.toString();
+    try {
+      Contacto result = contactSrv.updateContacto(updContactData);
+      return Response.ok(result.toString()).build();
+    } catch (ServiceException e) {
+      return Response.status(e.getStatus()).entity(e.getMessage()).build();
     }
   }
 
   @DELETE
   @Path("{id}")
   @Produces(MediaType.TEXT_PLAIN)
-  public String deleteContactById(@PathParam("id") String contactId) {
-    if (contactSrv.deleteContactoById(contactId)) {
-      return "Se ha eliminado el contacto con id:" + contactId;
-    } else {
-      return "Se ha producido un error al intentar actualizar el contacto";
+  public Response deleteContactById(@PathParam("id") String contactId) {
+    try {
+      contactSrv.deleteContactoById(contactId);
+      return Response.status(Status.NO_CONTENT).build();
+    } catch (ServiceException e) {
+      return Response.status(e.getStatus()).entity(e.getMessage()).build();
     }
   }
 }
