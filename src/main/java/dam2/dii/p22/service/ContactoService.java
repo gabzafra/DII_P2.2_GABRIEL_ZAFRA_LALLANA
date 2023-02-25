@@ -2,6 +2,7 @@ package dam2.dii.p22.service;
 
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.ws.rs.core.Response.Status;
 import dam2.dii.p22.dao.ContactDAO;
 import dam2.dii.p22.dao.ContactDAOinMem;
 import dam2.dii.p22.model.Contacto;
@@ -72,8 +73,13 @@ public class ContactoService {
     }
   }
 
-  public String getContactsTotal() {
-    return String.valueOf(DAO.getAllContacts().size());
+  public String getContactsTotal() throws ServiceException {
+    List<Contacto> contactList = DAO.getAllContacts();
+    if (contactList != null) {
+      return String.valueOf(contactList.size());
+    } else {
+      throw new ServiceException("No se pudo acceder a la bd", Status.NOT_FOUND);
+    }
   }
 
   public boolean validateEmail(Contacto contact) {

@@ -11,8 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import dam2.dii.p22.model.Contacto;
 import dam2.dii.p22.service.ContactoService;
+import dam2.dii.p22.service.ServiceException;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -27,12 +29,30 @@ public class ContactAPI {
     return (ArrayList<Contacto>) contactSrv.getAllContacts();
   }
 
+
   @GET
+
   @Path("size")
+
   @Produces(MediaType.TEXT_PLAIN)
-  public String getContactsTotal() {
-    return contactSrv.getContactsTotal();
+  public Response getContactsTotal() {
+    Response response;
+    try {
+      String total = contactSrv.getContactsTotal();
+      response = Response.ok(total).build();
+    } catch (ServiceException e) {
+      response = Response.status(e.getStatus()).entity(e.getMessage()).build();
+    }
+    return response;
   }
+
+
+  // @GET
+  // @Path("size")
+  // @Produces(MediaType.TEXT_PLAIN)
+  // public String getContactsTotal() {
+  // return contactSrv.getContactsTotal();
+  // }
 
   @POST
   @Consumes("application/x-www-form-urlencoded")
